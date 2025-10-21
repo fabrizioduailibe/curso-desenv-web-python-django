@@ -1,0 +1,29 @@
+{% extends 'modelobase.html' %}
+
+<!-- Tag do Django que o servidor Python entende -->
+{% load static %}
+
+
+{% block titulo %}
+<title>Página de Cadastro de Campo</title>
+{% endblock %}
+
+
+{% block conteudo %}
+<h3>Cadastrar Campo</h3>
+
+<p class="lead">Preencha todos os campos obrigatórios</p>
+
+<form action="" method="POST">
+    <!-- tag de segurança obrigatória para qualquer chamada de método -->
+    {% csrf_token %}
+
+    <!-- tag que automatiza a criação de todos os campos esperados na View em questão 
+     (no caso, CampoCreate). "as_p" -> exibir como parágrafo -->
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+
+</form>
+
+{% endblock %}
