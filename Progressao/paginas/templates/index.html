@@ -11,8 +11,21 @@
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
 <body>
-    <h3>Bem-vindos ao módulo PÁGINAS do sistema!</h3>
+    <h3>Bem-vindos ao Sistema Progressão!</h3>
     <br>
     <img src="{% static 'img/Icone Lencois areia.jpg' %}" width="200" alt="Água Lençóis">
+    <hr>
+
+    <!-- Objeto request tem todas as informações sobre a requisição sendo atendida com a pagina corrente -->
+    {% if request.user.is_authenticated %}
+
+        <a href="{% url 'inicio' %}" class="botao-padrao" title="Iniciar">Iniciar</a>
+    
+    {% else %}
+    
+        <a href="{% url 'login' %}" class="botao-seg" title="Fazer login">Fazer login</a>
+        
+    {% endif %}
+
 </body>
 </html>
