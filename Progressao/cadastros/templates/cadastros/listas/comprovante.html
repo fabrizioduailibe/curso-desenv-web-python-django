@@ -1,0 +1,73 @@
+{% extends 'modelobase.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<title>Página de Listagem de Registro</title>
+{% endblock %}
+
+{% block conteudo %}
+<div class="table-responsive">
+    <table width="100%">
+        <tr>
+            <td>
+                <h3>Lista de Comprovantes cadastrados</h3>
+            </td>
+            <td style="text-align: right;">
+                <a href="{% url 'cadastrar-comprovante' %}" class="btn btn-primary btn-sm">Novo</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+
+<!-- A class "table-responsive do Bootstrap para a tag DIV deixa a tabela responsiva ao ser
+ visualizada em celulares "-->
+<div class="table-responsive">
+    <!-- A class "table table-striped" do Bootstrap para a tag TABLE dá um visual organizado, com as 
+     linhas variando cor de fundo. -->
+    <table class="table table-striped">
+        <tr>
+            <th>Progressão</th>
+            <th>Atividade</th>
+            <th>Quant.</th>
+            <th>Data</th>
+            <th>Data final</th>
+            <th>Arquivo</th>
+            <th>Últ. Modif.</th>
+            <th>Usuário</th>
+            <th>Opções</th>
+        </tr>
+
+        <!-- Assim "{{ object }}", a variável {{ objecti_list }} também é pré-definida no Tango -->
+        {% for comprovante in object_list %}
+        <tr>
+            <!-- "pk" sempre se refere ao campo de índice do banco, mas em geral não é uma informação
+             interessante para o usuário. Mostrar apenas se for útil. -->
+            <td>{{ comprovante.progressao }}</td>
+            <td>{{ comprovante.atividade }}</td>
+            <td>{{ comprovante.quantidade }}</td>
+            <td>{{ comprovante.data | date:"d/m/Y" }}</td>
+            <td>{{ comprovante.data_final | date:"d/m/Y" }}</td>
+            <td>{{ comprovante.arquivo }}</td>
+            <td>{{ comprovante.ultima_modificacao }}</td>
+            <td>{{ comprovante.usuario }}</td>
+            <td>
+                <!-- As diretivas Tango funcionam até mesmo dentro de aspas. 
+                 Aqui usou-se a diretiva % url % para automatizar a geração do endereço 
+                 do link, bastando informa o "name" do path desejado. Como os paths para
+                 Excluir e Editar foram configurados em "urls.py" para requerer parâmetro
+                 (ID), este deve ser informado também. -->
+                <a href="{% url 'editar-comprovante' comprovante.pk %}" class="btn btn-warning btn-sm" title="Editar">E</a>
+                <a href="{% url 'excluir-comprovante' comprovante.pk %}" class="btn btn-danger btn-sm" title="Excluir">X</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Nenhum Comprovante registrado.</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+{% endblock %}

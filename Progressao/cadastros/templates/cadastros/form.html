@@ -1,26 +1,34 @@
 {% extends 'modelobase.html' %}
 
-<!-- Tag do Django que o servidor Python entende -->
+<!-- Tag do Django que o servidor Python entende, carregando a pasta "static" -->
 {% load static %}
 
+<!-- Carregando o Crispy Forms -->
+{% load crispy_forms_tags %}
 
 {% block titulo %}
-<title>Página de Cadastro de Campo</title>
+<title>Página de Cadastro de Registro</title>
 {% endblock %}
 
 
 {% block conteudo %}
-<h3>Cadastrar Campo</h3>
+<h3>Cadastrar Registro</h3>
 
 <p class="lead">Preencha todos os campos obrigatórios</p>
+
+<hr>
 
 <form action="" method="POST">
     <!-- tag de segurança obrigatória para qualquer chamada de método -->
     {% csrf_token %}
 
-    <!-- tag que automatiza a criação de todos os campos esperados na View em questão 
-     (no caso, CampoCreate). "as_p" -> exibir como parágrafo -->
-    {{ form.as_p }}
+    <!-- tag que automatiza a criação do form e todos os campos esperados na View em questão 
+     (no caso, as views Create). "as_p" -> exibir como parágrafo --> 
+    <!-- 
+    {{ form.as_p }} 
+      
+    Substituindo a notação Django tradicional de inclusão de form pelo Crispy Forms -->
+    {{ form|crispy }}
 
     <button type="submit" class="btn btn-primary">Cadastrar</button>
 

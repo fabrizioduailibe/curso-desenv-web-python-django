@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-uc@90ilaz__@w0^hilvc&s5uqn_r5&($%8sjh-*84(qsrv5jbk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -41,7 +41,15 @@ INSTALLED_APPS = [
     # Ativa os módulos 
     'paginas.apps.PaginasConfig',
     'cadastros.apps.CadastrosConfig',
+    'usuarios.apps.UsuariosConfig',
+    # Instalando o Crispy-Forms na aplicação
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
+
+# Crispy Forms - constante para indicar o template CSS a usar
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,3 +140,26 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configurações de Autenticação
+LOGIN_REDIRECT_URL = 'inicio'
+LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = 'login'
+
+# Configurações do diretório de arquivos de midia trafegados na operação
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Defina o formato de exibição padrão para datas (Ex: '02/01/2024')
+# Este formato é usado em templates (ListView) e para preencher campos (UpdateView)
+# Veja a documentação do Django para outros formatos.
+DATE_FORMAT = 'd/m/Y' # Exibe datas como DD/MM/AAAA (ex: 31/12/2025)
+
+# Opcional: Para garantir que o Django aceite a entrada no formato pt-br
+# Isto define os formatos que o Django tentará analisar ao receber dados de formulário
+# (Ex: '31/12/2025' ou '2025-12-31')
+DATE_INPUT_FORMATS = [
+    '%d/%m/%Y', # Ex: 31/12/2025 (Padrão pt-br)
+    '%Y-%m-%d', # Ex: 2025-12-31 (Padrão ISO)
+]

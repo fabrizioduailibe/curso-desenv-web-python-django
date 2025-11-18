@@ -1,0 +1,69 @@
+{% extends 'modelobase.html' %}
+
+<!-- Tag do Django que o servidor Python entende, carregando a pasta "static" -->
+{% load static %}
+
+<!-- Carregando o Crispy Forms -->
+{% load crispy_forms_tags %}
+
+
+{% block titulo %}
+<title>Página de Autenticação de Acesso</title>
+{% endblock %}
+
+
+{% block menu %}
+
+<!-- Deixando sem menu, já que é uma página de login, sem acesso amplo ainda. -->
+{% endblock %}
+
+
+{% block conteudo %}
+
+<!-- Usando classes bootstrap para a tag DIV, para estreitar o form para 5 colunas ao invés
+ das 12 colunas que ele assume na tela por padrão. A largura delas no eixo X fica Auto. -->
+<div class="row">
+    <div class="col-md-4 mx-auto">
+
+        {% if request.user.is_authenticated %}
+
+        <div class="alert alert-danger text-center" role="alert">
+            <i class="fa fa-ban me-2"></i>
+            <strong>Permissão Negada!</strong><br> Você não tem 
+                acesso a este recurso. Contate o administrador do sistema.
+        </div>
+
+        <!-- Ou:
+        <h3 class="text-center">Ação não permitida!</h3>
+        <p class="lead text-center"><strong>Você não tem permissão para executar esta ação.
+            Contate o administrador do sistema.</strong></p>
+        -->
+
+        {% else %}
+
+        <h3>Autenticação</h3>
+    
+        <hr>
+
+        <form action="" method="POST">
+            <!-- tag de segurança obrigatória para qualquer chamada de método -->
+            {% csrf_token %}
+
+            <!-- tag que automatiza a criação do form e todos os campos esperados na View em questão 
+            (no caso, as views Create). "as_p" -> exibir como parágrafo -->
+            <!-- 
+            {{ form.as_p }} 
+            
+            Substituindo a notação Django tradicional de inclusão de form pelo Crispy Forms -->
+            {{ form|crispy }}
+
+            <button type="submit" class="btn btn-primary">Entrar</button>
+
+        </form>
+
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'modelobase.html' %}
+
+<!-- Tag do Django que o servidor Python entende -->
+{% load static %}
+
+
+{% block titulo %}
+<title>Página de Exclusão de Registros</title>
+{% endblock %}
+
+
+{% block conteudo %}
+<h3>Excluir Registro</h3>
+
+<p class="lead">Confirme para excluir definitivamente o registro</p>
+
+<form action="" method="POST">
+
+    <!-- A tag {{ VAR }} serve para imprimir a variável VAR, que deve estar no escopo do form.
+     A variável "object" sinaliza ao Django que use o objeto sendo automaticamente visualizado
+     (Ex.: Campo, Atividade, etc) e ele exibirá conforme declarado no método "str" da classe. -->
+    <p>
+        VOCÊ TEM CERTEZA DE QUE DESEJA EXCLUIR -> <strong>{{ object }}</strong> ?
+    </p>
+
+    <!-- Tag de segurança obrigatória para qualquer chamada de método -->
+    {% csrf_token %}
+
+    <!-- Tag que automatiza a criação do form com todos os campos esperados na View 
+     em questão. "as_p" -> exibir como parágrafo -->
+    {{ form.as_p }}
+
+    <!-- Usando botão do tipo "danger" para chamar mais atenção -->
+    <button type="submit" class="btn btn-danger">Excluir</button>
+
+</form>
+
+{% endblock %}

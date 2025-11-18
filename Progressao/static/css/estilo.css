@@ -1,3 +1,59 @@
 body {
     background-color: aquamarine;
 }
+
+.botao-padrao {
+    display: inline-block;
+    /* Permite aplicar padding e outras propriedades de box */
+    padding: 10px 20px;
+    /* Espaçamento interno para criar a área do botão */
+    background-color: #007bff;
+    /* Cor de fundo azul */
+    color: white;
+    /* Cor do texto */
+    text-decoration: none;
+    /* Remove o sublinhado padrão do link */
+    border: none;
+    /* Remove a borda padrão */
+    border-radius: 5px;
+    /* Cantos arredondados */
+    cursor: pointer;
+    /* Muda o cursor para indicar que é clicável */
+    font-family: sans-serif;
+    /* Define uma fonte legível */
+    text-align: center;
+    /* Centraliza o texto */
+}
+
+.botao-padrao:hover {
+    background-color: #0056b3;
+    /* Muda a cor ao passar o mouse por cima */
+}
+
+.botao-seg {
+    display: inline-block;
+    /* Permite aplicar padding e outras propriedades de box */
+    padding: 10px 20px;
+    /* Espaçamento interno para criar a área do botão */
+    background-color: #06b82f;
+    /* Cor de fundo azul */
+    color: white;
+    /* Cor do texto */
+    text-decoration: none;
+    /* Remove o sublinhado padrão do link */
+    border: none;
+    /* Remove a borda padrão */
+    border-radius: 5px;
+    /* Cantos arredondados */
+    cursor: pointer;
+    /* Muda o cursor para indicar que é clicável */
+    font-family: sans-serif;
+    /* Define uma fonte legível */
+    text-align: center;
+    /* Centraliza o texto */
+}
+
+.botao-seg:hover {
+    background-color: #036c0c;
+    /* Muda a cor ao passar o mouse por cima */
+}

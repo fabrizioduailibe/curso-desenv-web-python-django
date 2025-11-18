@@ -1,0 +1,67 @@
+{% extends 'modelobase.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<title>Página de Listagem de Registro</title>
+{% endblock %}
+
+{% block conteudo %}
+<!-- 
+<h3>Lista de Atividades cadastradas</h3>
+<p style="text-align: right;">
+    <a href="{% url 'cadastrar-atividade' %}" class="btn btn-primary btn-sm">Nova</a></td>
+</p>
+-->
+<div class="table-responsive">
+    <table width="100%">
+        <tr>
+            <td>
+                <h3>Lista de Servidores cadastrados</h3>
+            </td>
+            <td style="text-align: right;">
+                <a href="{% url 'cadastrar-servidor' %}" class="btn btn-primary btn-sm">Novo</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+
+<!-- A class "table-responsive do Bootstrap para a tag DIV deixa a tabela responsiva ao ser
+ visualizada em celulares "-->
+<div class="table-responsive">
+    <!-- A class "table table-striped" do Bootstrap para a tag TABLE dá um visual organizado, com as 
+     linhas variando cor de fundo. -->
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Matrícula</th>
+            <th>CPF</th>
+            <th>Campus</th>
+            <th>Opções</th>
+        </tr>
+
+        <!-- Assim "{{ object }}", a variável {{ objecti_list }} também é pré-definida no Tango -->
+        {% for servidor in object_list %}
+        <tr>
+            <!-- "pk" sempre se refere ao campo de índice do banco, mas em geral não é uma informação
+             interessante para o usuário. Mostrar apenas se for útil. -->
+            <td>{{ servidor.pk }}</td>
+            <td>{{ servidor.nome_completo }}</td>
+            <td>{{ servidor.matricula }}</td>
+            <td>{{ servidor.get_cpf_mascarado }}</td>
+            <td>{{ servidor.campus }}</td>
+            <td>
+                <a href="{% url 'editar-servidor' servidor.pk %}" class="btn btn-warning btn-sm" title="Editar">E</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Nenhum Servidor registrado.</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+{% endblock %}

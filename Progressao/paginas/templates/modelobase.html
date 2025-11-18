@@ -11,6 +11,7 @@
     {% endblock %}
 
     <link rel="stylesheet" href="{% static 'css/bootstrap413.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
 </head>
 <body>
     
@@ -29,30 +30,128 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">
+                            <i class="fa fa-home" aria-hidden="true"></i>
                             Index
                         </a>
                     </li>
+
+                    <!-- Só mostra o menu de Cadastros se estiver autenticado -->
+                    {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" 
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
                             Cadastros
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'inicio'%}">Início</a>
-                            <a class="dropdown-item" href="{% url 'base' %}">Modelo Base</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'sobre' %}">Sobre</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'listar-campos' %}">Campos</a>
+                            <a class="dropdown-item" href="{% url 'listar-atividades' %}">Atividades</a>
+                            <a class="dropdown-item" href="{% url 'listar-classes' %}">Classes</a>
+                            <a class="dropdown-item" href="{% url 'listar-campi' %}">Campi</a>
+                            <a class="dropdown-item" href="{% url 'listar-status' %}">Status</a>
+                            <a class="dropdown-item" href="{% url 'listar-situacoes' %}">Situações</a>
+                            <a class="dropdown-item" href="{% url 'listar-validacoes' %}">Validações</a>
+                            <a class="dropdown-item" href="{% url 'listar-progressoes' %}">Progressões</a>
+                            <a class="dropdown-item" href="{% url 'listar-comprovantes' %}">Comprovantes</a>
+                            <a class="dropdown-item" href="{% url 'listar-servidores' %}">Servidores</a>
                         </div>
                     </li>
+                    {% endif %}
+
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'inicio' %}">Início</a>
+                        <a class="nav-link" href="{% url 'inicio' %}">
+                            <i class="fa fa-building-o" aria-hidden="true"></i>
+                            Início
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
+                        <a class="nav-link" href="{% url 'base' %}">
+                            <i class="fa fa-folder-o" aria-hidden="true"></i>
+                            Modelo Base
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                        <a class="nav-link" href="{% url 'sobre' %}">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            Sobre
+                        </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            Disabled
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav">
+
+                    <!-- Se usuário autenticado, mostra menu Usuários. Senão, mostra menu Login -->
+                    {% if request.user.is_authenticated %}
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                            <spam id="username">{{ request.user }}</spam>
+                            <!-- Podemos exibir fixamente "Usuário" como nome desse menu ou usar o 
+                             objeto request para exibir o nome do usuário autenticado. -->
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                Meus dados
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                Alterar senha
+                            </a>
+                            <div class="dropdown-divider"></div>
+
+                            <!-- Versões após Django 4.1 não aceitam mais chamada direta ao LogoutView. 
+                            Agora ela deve ser feita via POST de um form, assim como o Login 
+
+                            <a class="dropdown-item" href="{% url 'logout' %}">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                Sair
+                            </a>
+                            -->
+
+                            <!-- Opção 1 com uso do POST e form em menu DropDown -->
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item" style="width: 100%; 
+                                text-align: left;">
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                    Sair
+                                </button>
+                            </form>
+
+                            <!-- Opção 2 com uso do POST e form em menu DropDown -->
+                            <!--
+                            <form id="logout-form" action="{% url 'logout' %}" method="post" 
+                            style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); 
+                            document.getElementById('logout-form').submit();">
+                                Sair
+                            </a>
+                            -->
+                        </div>
+                    </li>
+
+                    {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            Login
+                        </a>
+                    </li>
+                    
+                    {% endif %}
+
                 </ul>
             </div>
         </div>     
@@ -68,6 +167,9 @@
     <div class="container">
         <!-- Deixando este block dentro da Div já formatado como "container", aumenta 
          a proteção contra alteração de formato. -->
+        
+        <br>
+
         {% block conteudo %}
         <h3>Template Modelo - Cadastros</h3>
 
@@ -82,10 +184,11 @@
     </div>
     {% endblock %}
 
-
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- A ordem correta de carregamento é Jquery, depois Popper, depois Bootstrap, pois 
+     este último depende dos anteriores. -->
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 </body>
 </html>

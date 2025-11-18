@@ -1,0 +1,67 @@
+{% extends 'modelobase.html' %}
+
+{% load static %}
+
+{% block titulo %}
+<title>Página de Listagem de Registro</title>
+{% endblock %}
+
+{% block conteudo %}
+<div class="table-responsive">
+    <table width="100%">
+        <tr>
+            <td>
+                <h3>Lista de Classes cadastradas</h3>
+            </td>
+            <td style="text-align: right;">
+                <a href="{% url 'cadastrar-classe' %}" class="btn btn-primary btn-sm">Nova</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+
+<!-- A class "table-responsive do Bootstrap para a tag DIV deixa a tabela responsiva ao ser
+ visualizada em celulares "-->
+<div class="table-responsive">
+    <!-- A class "table table-striped" do Bootstrap para a tag TABLE dá um visual organizado, com as 
+     linhas variando cor de fundo. -->
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Nível</th>
+            <th>Descrição</th>
+            <th>Opções</th>
+        </tr>
+
+        <!-- Assim "{{ object }}", a variável {{ objecti_list }} também é pré-definida no Tango -->
+        {% for classe in object_list %}
+        <tr>
+            <!-- "pk" sempre se refere ao campo de índice do banco, mas em geral não é uma informação
+             interessante para o usuário. Mostrar apenas se for útil. -->
+            <td>{{ classe.pk }}</td>
+            <td>{{ classe.nome }}</td>
+            <td>{{ classe.nivel }}</td>
+            <td>{{ classe.descricao }}</td>
+            <td>
+                <!-- As diretivas Tango funcionam até mesmo dentro de aspas. 
+                 Aqui usou-se a diretiva % url % para automatizar a geração do endereço 
+                 do link, bastando informa o "name" do path desejado. Como os paths para
+                 Excluir e Editar foram configurados em "urls.py" para requerer parâmetro
+                 (ID), este deve ser informado também. -->
+                <a href="{% url 'editar-classe' classe.pk %}" class="btn btn-warning btn-sm"
+                    title="Editar">E</a>
+                <a href="{% url 'excluir-classe' classe.pk %}" class="btn btn-danger btn-sm"
+                    title="Excluir">X</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Nenhuma Classe registrada.</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+{% endblock %}
